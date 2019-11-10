@@ -2,32 +2,62 @@ from enum import Enum
 
 from piece.Direction import Direction
 from piece.KnightDirection import KnightDirection
+from piece.Movement import Movement
 
 
 class PieceType(Enum):
-    PAWN = [Direction.NORTH, Direction.NORTH_EAST, Direction.NORTH_WEST]
-    ROOK = [Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST]
-    KNIGHT = [direction.value for direction in KnightDirection]
-    BISHOP = [Direction.NORTH_EAST, Direction.SOUTH_EAST, Direction.SOUTH_WEST, Direction.NORTH_WEST]
-    QUEEN = [direction.value for direction in Direction]
-    KING = [direction.value for direction in Direction]
-    TILE = [Direction.NONE]
+    PAWN = 'P'
+    ROOK = 'R'
+    KNIGHT = 'N'
+    BISHOP = 'B'
+    QUEEN = 'Q'
+    KING = 'K'
+    TILE = 'T'
 
-    def getPieceType(self, char):
+    @staticmethod
+    def get_piece_type(char):
         if char == 'P':
-            return self.PAWN
+            return PieceType.PAWN
         elif char == 'R':
-            return self.ROOK
+            return PieceType.ROOK
         elif char == 'N':
-            return self.KNIGHT
+            return PieceType.KNIGHT
         elif char == 'B':
-            return self.BISHOP
+            return PieceType.BISHOP
         elif char == 'Q':
-            return self.QUEEN
+            return PieceType.QUEEN
         elif char == 'K':
-            return self.KNIGHT
+            return PieceType.KING
         elif char == 'T':
-            return self.TILES
+            return PieceType.TILES
+
+    @staticmethod
+    def get_piece_move(piece):
+        if piece == PieceType.PAWN:
+            return [Movement(Direction.NORTH, 1), Movement(Direction.NORTH_EAST, 1),
+                    Movement(Direction.NORTH_WEST, 1)]
+        elif piece == PieceType.ROOK:
+            return [Movement(Direction.NORTH, -1), Movement(Direction.EAST, -1), Movement(Direction.SOUTH, -1),
+                    Movement(Direction.WEST, -1)]
+        elif piece == PieceType.KNIGHT:
+            movement = []
+            for value in KnightDirection:
+                movement.append(Movement(value, -1))
+            return movement
+        elif piece == PieceType.BISHOP:
+            return [Movement(Direction.NORTH_EAST, -1), Movement(Direction.NORTH_WEST, -1),
+                    Movement(Direction.SOUTH_EAST, -1),
+                    Movement(Direction.SOUTH_WEST, -1)]
+        elif piece == PieceType.QUEEN:
+            movement = []
+            for value in Direction:
+                movement.append(Movement(value, -1))
+            return movement
+        elif piece == PieceType.KING:
+            movement = []
+            for value in Direction:
+                movement.append(Movement(value, 1))
+            return movement
 
     def __str__(self):
-        return Enum.name
+        return self.name

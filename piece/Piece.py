@@ -1,14 +1,16 @@
+from piece.PieceType import PieceType
+
+
 class Piece:
 
-    #TODO check how class variable work
-    pieceType = None
-    color = None
-    directions = []
-
-    def __init__(self, pieceType, color):
-        self.pieceType = pieceType
+    def __init__(self, piece_type, color):
+        self.pieceType = piece_type
         self.color = color
-        self.directions = pieceType.value
+        self.movement = PieceType.get_piece_move(piece_type)
 
+    def get_movement(self):
+        return self.movement
+
+    @property
     def __str__(self):
-        return self.pieceType.__str__() + '  '+self.color.__str__()
+        return str(self.pieceType)

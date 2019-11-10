@@ -2,15 +2,15 @@ from enum import Enum
 
 
 class Direction(Enum):
-    NORTH = 'north'
-    NORTH_EAST = 'northEast'
-    EAST = 'east'
-    SOUTH_EAST = 'southEast'
-    SOUTH = 'south'
-    SOUTH_WEST = 'southWest'
-    WEST = 'west'
-    NORTH_WEST = 'northWest'
-    NONE = 'none'
+    NORTH = [1, 0]
+    NORTH_EAST = [1, 1]
+    EAST = [0, 1]
+    SOUTH_EAST = [-1, 1]
+    SOUTH = [-1, 0]
+    SOUTH_WEST = [-1, -1]
+    WEST = [0, -1]
+    NORTH_WEST = [1, -1]
+    NONE = [0, 0]
 
     def __str__(self):
-        return Enum.name
+        return self.name

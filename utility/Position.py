@@ -1,23 +1,24 @@
 class Position:
 
-    x = 0
-    y = 0
-
-    def __init__(self,x,y):
-        self,x = x
+    def __init__(self, x, y):
+        self.x = x
         self.y = y
 
-    def getX(self):
+    def get_x(self):
         return self.x
 
-    def setX(self, x):
+    def set_x(self, x):
         self.x = x
 
-    def getY(self):
+    def get_y(self):
         return self.y
 
-    def setY(self, y):
+    def set_y(self, y):
         self.y = y
 
+    def add(self, x, y):
+        self.x += x
+        self.y += y
+
     def __str__(self):
-        return 'X:' + self.x +' Y:' + self.y
+        return f'X: {self.x}  Y: {self.y}'
