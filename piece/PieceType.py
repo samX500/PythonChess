@@ -34,7 +34,7 @@ class PieceType(Enum):
     @staticmethod
     def get_piece_move(piece):
         if piece == PieceType.PAWN:
-            return [Movement(Direction.NORTH, 1), Movement(Direction.NORTH_EAST, 1),
+            return [Movement(Direction.NORTH, 2), Movement(Direction.NORTH_EAST, 1),
                     Movement(Direction.NORTH_WEST, 1)]
         elif piece == PieceType.ROOK:
             return [Movement(Direction.NORTH, -1), Movement(Direction.EAST, -1), Movement(Direction.SOUTH, -1),

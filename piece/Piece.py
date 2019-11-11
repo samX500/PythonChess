@@ -11,6 +11,9 @@ class Piece:
     def get_movement(self):
         return self.movement
 
+    def get_color(self):
+        return self.color
+
     @property
     def __str__(self):
         return str(self.pieceType)

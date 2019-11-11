@@ -17,7 +17,7 @@ class Board:
         self.pieces = self.instantiateBoard()
 
     def instantiateBoard(self):
-        # Make this better once I understand loop better
+        # TODO Make this better once I understand loop better
         column = []
         column.append(self.build_piece_row(Color.WHITE))
         column.append(self.build_pawn_row(Color.WHITE))
@@ -33,7 +33,7 @@ class Board:
     def build_piece_row(self, color):
         row = []
 
-        # The isFirstRow can probably be put in the for if I try hard enough
+        # TODO The isFirstRow can probably be put in the for if I try hard enough
         if color == Color.WHITE:
             for char in self.DEFAULT_LAYOUT:
                 row.append(Piece(PieceType.get_piece_type(char), color))
@@ -57,24 +57,47 @@ class Board:
 
         return row
 
-    def get_possible_move(self,position):
+    def get_possible_move(self, position):
+        # TODO make special case for pawn
         piece = self.pieces[position.get_x()][position.get_y()]
         movement = piece.get_movement()
         possible_move = []
 
         for value in movement:
             for i in range(value.get_length()):
-                position.add(*value.get_direction().value)
-                if self.tile_is_empty(position):
-                    possible_move.append(position)
+                test_position = position.clone()
+                to_add = value.get_direction().value
+                to_add[0] *= piece.get_color().value
+                test_position.add(*value.get_direction().value)
+                if self.tile_is_empty(test_position):
+                    possible_move.append(test_position)
+                else:
+                    if self.get_piece_at(test_position).get_color() != piece.get_color():
+                        possible_move.append(test_position)
+                    break
 
-    def tile_is_empty(self,position):
+        return possible_move
+
+    def tile_is_empty(self, position):
         return self.pieces[position.get_x()][position.get_y()].pieceType == PieceType.TILE
 
     def move_piece(self, original_position, new_position):
         piece = self.pieces[original_position.get_x()][original_position.get_y()]
         self.pieces[new_position.get_x()][new_position.get_y()] = piece
         self.pieces[original_position.get_x()][original_position.get_y()] = Piece(PieceType.TILE, Color.NONE)
+
+    def get_piece_at(self, position):
+        return self.pieces[position.get_x()][position.get_y()]
+
+    def show_possible_move(self, possible_move):
+        str = ''
+        for row in range(self.height):
+            for piece in range(self.width):
+                if Position(row, piece) in possible_move:
+                    str += 'x'
+                str += self.pieces[row][piece].__str__ + ', '
+            str += '\n'
+        return str
 
     def __str__(self):
         str = ' '
@@ -90,5 +113,8 @@ class Board:
 if __name__ == '__main__':
     board = Board(8, 8)
 
-    print(board.get_possible_move(Position(1,1)))
+    board.move_piece(Position(0, 3), Position(4, 4))
+    possible_move = board.get_possible_move(Position(4, 4))
+
+    print(board.show_possible_move(possible_move), '\n')
     print(board)
