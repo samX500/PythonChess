@@ -20,14 +20,18 @@ class Position:
         self.x += x
         self.y += y
 
-    def __eq__(self, other):
+    def __lt__(self, other):
+        if self.x < other.x:
+            return True
+        if self.x == other.x and self.y < other.y:
+            return True
+        return False
 
-        if isinstance(other,tuple):
-            return self.x == other[0] and self.y == other[1]
+    def __eq__(self, other):
         return self.x == other.x and self.y == other.y
 
     def clone(self):
-        return Position(self.get_x(),self.get_y())
+        return Position(self.get_x(), self.get_y())
 
     def __str__(self):
         return f'X: {self.x}  Y: {self.y}'

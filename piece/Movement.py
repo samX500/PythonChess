@@ -8,4 +8,7 @@ class Movement:
         return self.length
 
     def get_direction(self):
-        return self.direction
+        return self.direction.value.copy()
+
+    def __str__(self):
+        return f'{self.direction}  {self.length}'

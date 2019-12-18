@@ -60,25 +60,12 @@ class Board:
     def get_possible_move(self, position):
         # TODO make special case for pawn
         piece = self.pieces[position.get_x()][position.get_y()]
-        movement = piece.get_movement()
-        possible_move = []
 
-        for value in movement:
-            for i in range(value.get_length()):
-                test_position = position.clone()
-                to_add = value.get_direction().value
-                to_add[0] *= piece.get_color().value
-                test_position.add(*value.get_direction().value)
-                if self.tile_is_empty(test_position):
-                    possible_move.append(test_position)
-                else:
-                    if self.get_piece_at(test_position).get_color() != piece.get_color():
-                        possible_move.append(test_position)
-                    break
-
-        return possible_move
+        return piece.get_legal_move(self,position)
 
     def tile_is_empty(self, position):
+        if not self.is_in_bound(position):
+            raise Exception("position not in bound")
         return self.pieces[position.get_x()][position.get_y()].pieceType == PieceType.TILE
 
     def move_piece(self, original_position, new_position):
@@ -88,6 +75,9 @@ class Board:
 
     def get_piece_at(self, position):
         return self.pieces[position.get_x()][position.get_y()]
+
+    def is_in_bound(self, position):
+        return 0 <= position.x < self.width and 0 <= position.y < self.height
 
     def show_possible_move(self, possible_move):
         str = ''
@@ -113,8 +103,9 @@ class Board:
 if __name__ == '__main__':
     board = Board(8, 8)
 
-    board.move_piece(Position(0, 3), Position(4, 4))
-    possible_move = board.get_possible_move(Position(4, 4))
+    test = board.get_possible_move(Position(1, 1))
+    print(test)
+    for position in test:
+        print(position)
 
-    print(board.show_possible_move(possible_move), '\n')
-    print(board)
+    print(board.show_possible_move(test), '\n')

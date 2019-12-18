@@ -31,33 +31,5 @@ class PieceType(Enum):
         elif char == 'T':
             return PieceType.TILES
 
-    @staticmethod
-    def get_piece_move(piece):
-        if piece == PieceType.PAWN:
-            return [Movement(Direction.NORTH, 2), Movement(Direction.NORTH_EAST, 1),
-                    Movement(Direction.NORTH_WEST, 1)]
-        elif piece == PieceType.ROOK:
-            return [Movement(Direction.NORTH, -1), Movement(Direction.EAST, -1), Movement(Direction.SOUTH, -1),
-                    Movement(Direction.WEST, -1)]
-        elif piece == PieceType.KNIGHT:
-            movement = []
-            for value in KnightDirection:
-                movement.append(Movement(value, -1))
-            return movement
-        elif piece == PieceType.BISHOP:
-            return [Movement(Direction.NORTH_EAST, -1), Movement(Direction.NORTH_WEST, -1),
-                    Movement(Direction.SOUTH_EAST, -1),
-                    Movement(Direction.SOUTH_WEST, -1)]
-        elif piece == PieceType.QUEEN:
-            movement = []
-            for value in Direction:
-                movement.append(Movement(value, -1))
-            return movement
-        elif piece == PieceType.KING:
-            movement = []
-            for value in Direction:
-                movement.append(Movement(value, 1))
-            return movement
-
     def __str__(self):
         return self.name

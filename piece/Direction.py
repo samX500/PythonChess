@@ -2,14 +2,14 @@ from enum import Enum
 
 
 class Direction(Enum):
-    NORTH = [1, 0]
-    NORTH_EAST = [1, 1]
-    EAST = [0, 1]
-    SOUTH_EAST = [-1, 1]
-    SOUTH = [-1, 0]
-    SOUTH_WEST = [-1, -1]
-    WEST = [0, -1]
-    NORTH_WEST = [1, -1]
+    UP = [-1, 0]
+    UP_RIGHT = [-1, 1]
+    RIGHT = [0, 1]
+    DOWN_RIGHT = [1, 1]
+    DOWN = [1, 0]
+    DOWN_LEFT = [1, -1]
+    LEFT = [0, -1]
+    UP_LEFT = [-1, -1]
     NONE = [0, 0]
 
     def __str__(self):
