@@ -17,6 +17,8 @@ class Piece:
     def get_color(self):
         return self.color
 
+    def get_piece_type(self):
+        return self.pieceType
 
     def get_legal_move(self,board,position):
         # TODO make special case for pawn

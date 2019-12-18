@@ -2,7 +2,6 @@ from piece.PieceType import PieceType
 from piece.Direction import Direction
 from piece.Movement import Movement
 from piece.Piece import Piece
-from Board.Board import Board
 
 
 class Rook(Piece):
@@ -15,4 +14,4 @@ class Rook(Piece):
                 Movement(Direction.LEFT, -1)]
 
     def get_legal_move(self, position, board):
-        return self.get_legal_move(position, board)
+        return super().get_legal_move(position, board)

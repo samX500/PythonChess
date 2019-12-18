@@ -7,6 +7,9 @@ class Movement:
     def get_length(self):
         return self.length
 
+    def set_lenght(self, newLenght):
+        self.length = newLenght
+
     def get_direction(self):
         return self.direction.value.copy()
 

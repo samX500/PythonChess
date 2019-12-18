@@ -1,59 +1,49 @@
 from builtins import range
 
 from piece.Color import Color
-from piece.Direction import Direction
 from piece.PieceType import PieceType
-
 from piece.Piece import Piece
+from piece.PieceFactory import PieceFactory
+
 from utility.Position import Position
 
 
 class Board:
-    DEFAULT_LAYOUT = 'RNBQKBNR'
 
     def __init__(self, width, height):
         self.height = height
         self.width = width
-        self.pieces = self.instantiateBoard()
+        self.pieces = self.instantiate_board()
 
-    def instantiateBoard(self):
-        # TODO Make this better once I understand loop better
+    def add_piece(self,position,piece):
+        if self.is_in_bound(position):
+            self.pieces[position.get_x()][position.get_y()] = piece
+
+    def instantiate_board(self):
         column = []
-        column.append(self.build_piece_row(Color.WHITE))
-        column.append(self.build_pawn_row(Color.WHITE))
-        column.append(self.build_empty_row())
-        column.append(self.build_empty_row())
-        column.append(self.build_empty_row())
-        column.append(self.build_empty_row())
-        column.append(self.build_pawn_row(Color.BLACK))
-        column.append(self.build_piece_row(Color.BLACK))
+
+        column.append(self.build_row('WR,WN,WB,WQ,WK,WB,WN,WR'))
+        column.append(self.build_row('WP,WP,WP,WP,WP,WP,WP,WP'))
+        column.append(self.build_row('NE,NE,NE,NE,NE,NE,NE,NE'))
+        column.append(self.build_row('NE,NE,NE,NE,NE,NE,NE,NE'))
+        column.append(self.build_row('NE,NE,NE,NE,NE,NE,NE,NE'))
+        column.append(self.build_row('NE,NE,NE,NE,NE,NE,NE,NE'))
+        column.append(self.build_row('BP,BP,BP,BP,BP,BP,BP,BP'))
+        column.append(self.build_row('BR,BN,BB,BK,BQ,BB,BN,BR'))
 
         return column
 
-    def build_piece_row(self, color):
+    def build_row(self, str):
+        pieces = str.split(',')
         row = []
 
-        # TODO The isFirstRow can probably be put in the for if I try hard enough
-        if color == Color.WHITE:
-            for char in self.DEFAULT_LAYOUT:
-                row.append(Piece(PieceType.get_piece_type(char), color))
-        else:
-            for char in self.DEFAULT_LAYOUT[::-1]:
-                row.append(Piece(PieceType.get_piece_type(char), color))
-
-        return row
-
-    def build_pawn_row(self, color):
-        row = []
-        for char in range(self.width):
-            row.append(Piece(PieceType.PAWN, color))
-
-        return row
-
-    def build_empty_row(self):
-        row = []
-        for char in range(self.width):
-            row.append(Piece(PieceType.TILE, Color.NONE))
+        for piece in pieces:
+            color = Color.get_color(piece[0])
+            #TODO hardcoded
+            if len(piece) == 3:
+                row.append(PieceFactory.build_used_pawn(color))
+            else:
+                row.append(PieceFactory.build_piece(piece[1], color))
 
         return row
 
@@ -61,7 +51,7 @@ class Board:
         # TODO make special case for pawn
         piece = self.pieces[position.get_x()][position.get_y()]
 
-        return piece.get_legal_move(self,position)
+        return piece.get_legal_move(self, position)
 
     def tile_is_empty(self, position):
         if not self.is_in_bound(position):
@@ -71,7 +61,7 @@ class Board:
     def move_piece(self, original_position, new_position):
         piece = self.pieces[original_position.get_x()][original_position.get_y()]
         self.pieces[new_position.get_x()][new_position.get_y()] = piece
-        self.pieces[original_position.get_x()][original_position.get_y()] = Piece(PieceType.TILE, Color.NONE)
+        self.pieces[original_position.get_x()][original_position.get_y()] = PieceFactory.build_piece('E',Color.NONE)
 
     def get_piece_at(self, position):
         return self.pieces[position.get_x()][position.get_y()]
