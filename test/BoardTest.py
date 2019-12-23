@@ -1,7 +1,6 @@
 import unittest
 
 from board.Board import Board
-from utility.Position import Position
 
 
 class MyTestCase(unittest.TestCase):
@@ -21,8 +20,6 @@ class MyTestCase(unittest.TestCase):
         # assert board.tile_is_empty(Position(0, 2))
         # TODO Assert raise
         board = Board(8, 8)
-
-
 
 
 if __name__ == '__main__':

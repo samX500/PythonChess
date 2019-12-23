@@ -1,9 +1,5 @@
 from enum import Enum
 
-from piece.Direction import Direction
-from piece.KnightDirection import KnightDirection
-from piece.Movement import Movement
-
 
 class PieceType(Enum):
     PAWN = 'P'

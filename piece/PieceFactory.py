@@ -1,10 +1,4 @@
-from piece.Rook import Rook
-from piece.Knight import Knight
-from piece.Bishop import Bishop
-from piece.King import King
-from piece.Queen import Queen
-from piece.Pawn import Pawn
-from piece.Empty import Empty
+from piece import *
 
 
 class PieceFactory():
@@ -32,3 +26,7 @@ class PieceFactory():
     @staticmethod
     def build_used_pawn(color):
         return Pawn(color, False)
+
+    @staticmethod
+    def build_empty():
+        return Empty(Color.NONE)

@@ -1,5 +1,4 @@
 class Memory:
-
     doMemory = None
     undoMemory = None
 

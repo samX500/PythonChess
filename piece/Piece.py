@@ -1,15 +1,15 @@
-from piece.PieceType import PieceType
+from abc import ABC
+
+from board import Board
+from utility import Position
 
 
-class Piece:
+class Piece(ABC):
 
-    def __init__(self, piece_type, color,movement):
+    def __init__(self, piece_type, color, movement):
         self.pieceType = piece_type
         self.color = color
         self.movement = movement
-
-    def build_movement(self):
-        pass
 
     def get_movement(self):
         return self.movement
@@ -20,9 +20,9 @@ class Piece:
     def get_piece_type(self):
         return self.pieceType
 
-    def get_legal_move(self,board,position):
+    def get_legal_move(self, board : Board, position : Position):
         # TODO make special case for pawn
-        piece = board.pieces[position.get_x()][position.get_y()]
+        piece = board.get_at_coordinate(position)
         movement = piece.get_movement()
         possible_move = []
 
@@ -37,7 +37,7 @@ class Piece:
                     if board.tile_is_empty(test_position):
                         possible_move.append(test_position.clone())
                     else:
-                        if board.get_piece_at(test_position).get_color() != piece.get_color():
+                        if board.get_at_coordinate(test_position).get_color() != piece.get_color():
                             possible_move.append(test_position)
                         break
                     i += 1
@@ -45,6 +45,9 @@ class Piece:
                     break
 
         return possible_move
+
+    def __eq__(self, other):
+        return other.isinstance(self) and self.get_color() == other.get_color()
 
     @property
     def __str__(self):

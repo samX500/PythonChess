@@ -1,11 +1,11 @@
-from board.Board import Board
+from board.BoardFactory import BoardFactory
 
 from memory.Memory import Memory
 
 
 class Game:
 
-    def __init__(self, boardWidth, boardHeight):
-        self.board = Board(boardWidth, boardHeight)
+    def __init__(self, width, length):
+        self.board = BoardFactory.build_board(width, length, BoardFactory.DEFAULT_BOARD)
         self.memory = Memory()
         self.turn = 0

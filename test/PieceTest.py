@@ -1,17 +1,23 @@
 import unittest
+
+from board.BoardFactory import BoardFactory
 from utility.Position import Position
-from board.Board import Board
 
 
 class MyTestCase(unittest.TestCase):
 
+    def print_list(self, list):
+        for position in sorted(list):
+            print(position)
+
     def test_get_legal_move(self):
-        board = Board(8, 8)
+        board = BoardFactory.build_board(8, 8, BoardFactory.DEFAULT_BOARD)
 
         assert board.get_possible_move(Position(0, 0)) == [], 'Rook no move failed'
 
         # TODO test for special pawn case
 
+        print(board)
         assert sorted(board.get_possible_move(Position(1, 1))) == sorted([Position(2, 1),
                                                                           Position(3, 1)]), 'pawn first move failed'
 
@@ -75,5 +81,6 @@ class MyTestCase(unittest.TestCase):
         assert sorted(board.get_possible_move(Position(2, 5))) == sorted(
             [Position(1, 5), Position(1, 4), Position(1, 6)]), 'Pawn capture failed'
 
-    if __name__ == '__main__':
-        unittest.main()
+
+if __name__ == '__main__':
+    unittest.main()
