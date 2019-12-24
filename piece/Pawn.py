@@ -7,7 +7,6 @@ from utility import Position
 
 
 class Pawn(Piece):
-
     MOVEMENT = [Movement(Direction.UP, 1), Movement(Direction.UP_RIGHT, 0), Movement(Direction.UP_LEFT, 0)]
 
     UP_INDEX = 0
@@ -28,14 +27,13 @@ class Pawn(Piece):
 
     def __is_capture(self, position: Position, board: Board, direction: Direction):
         test_position = position.clone()
-        to_add = direction
-        to_add[0] *= self.get_color().value
-        test_position.add(*to_add)
+        add = direction.value[0] * self.get_color().value,direction.value[1]
+        test_position.add(*add)
 
-        piece = board.get_piece_at(test_position)
+        piece = board.get_at_coordinate(test_position)
         return not piece.pieceType == PieceType.TILE and not piece.get_color() == self.get_color()
 
-    def get_legal_move(self, position, board):
+    def get_legal_move(self, board, position):
         # TODO code special case
         if self.is_first_move():
             self.movement[self.UP_INDEX].set_lenght(2)
@@ -46,7 +44,7 @@ class Pawn(Piece):
         if self.__is_capture(position, board, Direction.UP_RIGHT):
             self.movement[self.UP_RIGHT_INDEX].set_lenght(1)
 
-        legal_move = super().get_legal_move(position, board)
+        legal_move = super().get_legal_move(board, position)
 
         self.__reset_movement__()
 

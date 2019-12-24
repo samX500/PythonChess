@@ -4,9 +4,10 @@ from board.BoardFactory import BoardFactory
 from utility.Position import Position
 
 
-class MyTestCase(unittest.TestCase):
+class PieceTest(unittest.TestCase):
 
-    def print_list(self, list):
+    @staticmethod
+    def print_list(list):
         for position in sorted(list):
             print(position)
 
@@ -46,6 +47,8 @@ class MyTestCase(unittest.TestCase):
 
         board.move_piece(Position(2, 3), Position(1, 3))
         board.move_piece(Position(0, 2), Position(4, 4))
+
+        PieceTest.print_list(sorted(board.get_possible_move(Position(4, 4))))
         assert sorted(board.get_possible_move(Position(4, 4))) == sorted(
             [Position(2, 2), Position(3, 3), Position(5, 5),
              Position(6, 6), Position(5, 3), Position(2, 6),

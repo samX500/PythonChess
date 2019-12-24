@@ -31,12 +31,12 @@ class Board:
         # TODO make special case for pawn
         piece = self.get_at_coordinate(position)
 
-        return piece.get_legal_move(position, self)
+        return piece.get_legal_move(self, position)
 
     def tile_is_empty(self, position):
         if not self.is_in_bound(position):
             raise Exception("position not in bound")
-        return self.pieces[position.get_x()][position.get_y()].pieceType == PieceType.TILE
+        return self.get_at_coordinate(position).pieceType == PieceType.TILE
 
     def move_piece(self, original_position, new_position):
         piece = self.pieces[original_position.get_x()][original_position.get_y()]

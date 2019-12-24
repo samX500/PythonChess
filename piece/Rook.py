@@ -11,6 +11,3 @@ class Rook(Piece):
 
     def __init__(self, color):
         Piece.__init__(self, PieceType.ROOK, color, self.MOVEMENT)
-
-    def get_legal_move(self, position, board):
-        return super().get_legal_move(position, board)
