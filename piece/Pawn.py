@@ -25,6 +25,9 @@ class Pawn(Piece):
     def is_first_move(self):
         return self.__is_first_move
 
+    def move(self):
+        self.__is_first_move = False
+
     def __is_capture(self, position: Position, board: Board, direction: Direction):
         test_position = position.clone()
         add = direction.value[0] * self.get_color().value,direction.value[1]

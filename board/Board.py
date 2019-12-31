@@ -62,6 +62,9 @@ class Board:
             str += '\n'
         return str
 
+    def board_size(self):
+        return self.width,self.height
+
     def __str__(self):
         str = ' '
         for row in range(self.height):
