@@ -11,13 +11,13 @@ class Board:
     def __init__(self, width, height):
         self.height = height
         self.width = width
-        self.pieces = self.instantiate_board(width, height)
+        self.pieces = self.__instantiate_board(width, height)
 
     def add_piece(self, position, piece):
         if self.is_in_bound(position):
             self.pieces[position.get_x()][position.get_y()] = piece
 
-    def instantiate_board(self, width, height):
+    def __instantiate_board(self, width, height):
         line = []
         for i in range(0, width):
             row = []
@@ -28,7 +28,6 @@ class Board:
         return line
 
     def get_possible_move(self, position):
-        # TODO make special case for pawn
         piece = self.get_at_coordinate(position)
 
         return piece.get_legal_move(self, position)
@@ -39,9 +38,13 @@ class Board:
         return self.get_at_coordinate(position).pieceType == PieceType.TILE
 
     def move_piece(self, original_position, new_position):
-        piece = self.pieces[original_position.get_x()][original_position.get_y()]
+        piece = self.get_at_coordinate(original_position)
         self.pieces[new_position.get_x()][new_position.get_y()] = piece
         self.pieces[original_position.get_x()][original_position.get_y()] = PieceFactory.build_piece('E', Color.NONE)
+
+    def is_legal_move(self, original_position, new_position):
+        piece = self.get_at_coordinate(original_position)
+        return piece.is_legal_move(original_position, new_position, self)
 
     def get_at_coordinate(self, position):
         return self.pieces[position.get_x()][position.get_y()]
@@ -62,8 +65,8 @@ class Board:
             str += '\n'
         return str
 
-    def board_size(self):
-        return self.width,self.height
+    def get_size(self):
+        return self.width, self.height
 
     def __str__(self):
         str = ' '

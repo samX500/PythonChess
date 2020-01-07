@@ -28,17 +28,29 @@ class Pawn(Piece):
     def move(self):
         self.__is_first_move = False
 
-    def __is_capture(self, position: Position, board: Board, direction: Direction):
+    def __is_faced(self, position: Position, board: Board):
         test_position = position.clone()
-        add = direction.value[0] * self.get_color().value,direction.value[1]
+        add = Direction.UP.value[0] * self.get_color().value, Direction.UP.value[1]
         test_position.add(*add)
 
-        piece = board.get_at_coordinate(test_position)
-        return not piece.pieceType == PieceType.TILE and not piece.get_color() == self.get_color()
+        return board.is_in_bound(test_position) and not board.get_at_coordinate(
+            test_position).get_piece_type() == PieceType.TILE
+
+    def __is_capture(self, position: Position, board: Board, direction: Direction):
+        test_position = position.clone()
+        add = direction.value[0] * self.get_color().value, direction.value[1]
+        test_position.add(*add)
+        if board.is_in_bound(test_position):
+            piece = board.get_at_coordinate(test_position)
+            return not piece.pieceType == PieceType.TILE and not piece.get_color() == self.get_color()
+        return False
 
     def get_legal_move(self, board, position):
         # TODO code special case
-        if self.is_first_move():
+
+        if self.__is_faced(position, board):
+            self.movement[self.UP_INDEX].set_lenght(0)
+        elif self.__is_first_move:
             self.movement[self.UP_INDEX].set_lenght(2)
 
         if self.__is_capture(position, board, Direction.UP_LEFT):

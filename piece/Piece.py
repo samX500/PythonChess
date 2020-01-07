@@ -20,8 +20,15 @@ class Piece(ABC):
     def get_piece_type(self):
         return self.pieceType
 
-    def get_legal_move(self, board : Board, position : Position):
-        # TODO make special case for pawn
+    def is_legal_move(self, original_position: Position, new_position: Position, board: Board):
+        #TODO test this method
+        legal_move = self.get_legal_move(board, original_position)
+        if legal_move is None:
+            return False
+        return new_position in legal_move
+
+    @staticmethod
+    def get_legal_move(board : Board, position : Position):
         piece = board.get_at_coordinate(position)
         movement = piece.get_movement()
         possible_move = []

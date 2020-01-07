@@ -4,6 +4,9 @@ class Position:
         self.x = x
         self.y = y
 
+    def as_tuple(self):
+        return self.x,self.y
+
     def get_x(self):
         return self.x
 
@@ -29,6 +32,9 @@ class Position:
 
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
+
+    def __hash__(self):
+        return hash((self.x,self.y))
 
     def clone(self):
         return Position(self.get_x(), self.get_y())

@@ -17,8 +17,6 @@ class PieceTest(unittest.TestCase):
         assert board.get_possible_move(Position(0, 0)) == [], 'Rook no move failed'
 
         # TODO test for special pawn case
-
-        print(board)
         assert sorted(board.get_possible_move(Position(1, 1))) == sorted([Position(2, 1),
                                                                           Position(3, 1)]), 'pawn first move failed'
 
@@ -47,8 +45,6 @@ class PieceTest(unittest.TestCase):
 
         board.move_piece(Position(2, 3), Position(1, 3))
         board.move_piece(Position(0, 2), Position(4, 4))
-
-        PieceTest.print_list(sorted(board.get_possible_move(Position(4, 4))))
         assert sorted(board.get_possible_move(Position(4, 4))) == sorted(
             [Position(2, 2), Position(3, 3), Position(5, 5),
              Position(6, 6), Position(5, 3), Position(2, 6),
@@ -83,6 +79,13 @@ class PieceTest(unittest.TestCase):
         board.move_piece(Position(6, 5), Position(2, 5))
         assert sorted(board.get_possible_move(Position(2, 5))) == sorted(
             [Position(1, 5), Position(1, 4), Position(1, 6)]), 'Pawn capture failed'
+
+
+        assert sorted(board.get_possible_move(Position(1,0))) == sorted([Position(2,0), Position(3,0)]), \
+            'left edge pawn failed'
+
+        assert sorted(board.get_possible_move(Position(1, 7))) == sorted(
+            [Position(2, 7), Position(3, 7)]), 'right edge pawn failed'
 
 
 if __name__ == '__main__':
